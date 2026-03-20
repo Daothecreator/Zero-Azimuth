@@ -1,6 +1,16 @@
 import { useState, useCallback } from 'react';
 import type { BlindingState } from '@/types/quantum.types';
 
+const scientificTerms = [
+  'photoelectric', 'tunneling', 'entanglement', 'superposition',
+  'interference', 'decoherence', 'coherence', 'polarization',
+  'wave function', 'quantum state', 'spin', 'orbital',
+  'energy level', 'band gap', 'fermion', 'boson',
+  'quark', 'lepton', 'neutrino', 'photon',
+  'electron', 'proton', 'neutron', 'atom',
+  'molecule', 'crystal', 'lattice', 'phonon'
+];
+
 export function useBlinding() {
   const [blindingState, setBlindingState] = useState<BlindingState>({
     active: true,
@@ -46,16 +56,6 @@ export function useBlinding() {
     ],
     entropy: 7.8
   });
-
-  const scientificTerms = [
-    'photoelectric', 'tunneling', 'entanglement', 'superposition',
-    'interference', 'decoherence', 'coherence', 'polarization',
-    'wave function', 'quantum state', 'spin', 'orbital',
-    'energy level', 'band gap', 'fermion', 'boson',
-    'quark', 'lepton', 'neutrino', 'photon',
-    'electron', 'proton', 'neutron', 'atom',
-    'molecule', 'crystal', 'lattice', 'phonon'
-  ];
 
   // Генерация шумового запроса
   const generateNoiseQuery = useCallback((): string => {

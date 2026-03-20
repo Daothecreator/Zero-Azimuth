@@ -7,10 +7,15 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
+interface ChartDataPoint {
+  time: string;
+  value: number;
+}
+
 export function PerformanceMetrics() {
-  const [latencyData, setLatencyData] = useState<any[]>([]);
-  const [throughputData, setThroughputData] = useState<any[]>([]);
-  const [detectionRiskData, setDetectionRiskData] = useState<any[]>([]);
+  const [latencyData, setLatencyData] = useState<ChartDataPoint[]>([]);
+  const [throughputData, setThroughputData] = useState<ChartDataPoint[]>([]);
+  const [detectionRiskData, setDetectionRiskData] = useState<ChartDataPoint[]>([]);
 
   // Генерация данных для графиков
   useEffect(() => {
@@ -239,7 +244,7 @@ export function PerformanceMetrics() {
                     border: '1px solid #374151',
                     borderRadius: '6px'
                   }}
-                  formatter={(value: any) => `${(value * 100).toFixed(2)}%`}
+                  formatter={(value: number) => `${(value * 100).toFixed(2)}%`}
                 />
                 <Area 
                   type="monotone" 
