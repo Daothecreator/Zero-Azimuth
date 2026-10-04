@@ -92,7 +92,7 @@ export function ZeroUI({ onTaskExecute }: ZeroUIProps) {
             </div>
 
             {/* Результат */}
-            {currentResult.result && (
+            {currentResult.result != null && (
               <div className="mt-4 p-3 bg-background rounded-md border">
                 <div className="text-xs font-mono text-green-400 mb-2">Result:</div>
                 <pre className="text-xs text-foreground whitespace-pre-wrap">

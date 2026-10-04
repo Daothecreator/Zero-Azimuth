@@ -5,7 +5,7 @@ export interface VibeResult {
   intent: string;
   entities: Record<string, string>;
   generatedCode: string;
-  result?: any;
+  result?: unknown;
   executionTime: number;
 }
 
@@ -144,12 +144,12 @@ print("Не смог распознать запрос, но обработаю 
   }, []);
 
   // Выполнение кода в безопасной среде
-  const executeCode = useCallback((code: string): any => {
+  const executeCode = useCallback((code: string): Promise<unknown> => {
     // Симуляция выполнения
     const delay = Math.random() * 2000 + 500; // 0.5-2.5 секунды
     
     // Симуляция результата - более универсальная
-    const mockResults: Record<string, any> = {
+    const mockResults: Record<string, unknown> = {
       search_papers: [
         { title: 'Quantum Computing Advances 2025', authors: ['Dr. Smith', 'Prof. Johnson'], year: 2025, doi: '10.1000/182' },
         { title: 'AI in Scientific Research', authors: ['Dr. Chen'], year: 2024, doi: '10.1001/183' },

@@ -26,7 +26,7 @@ export interface TaskExecution {
   status: 'pending' | 'executing' | 'completed' | 'failed';
   startTime: Date;
   endTime?: Date;
-  results?: any;
+  results?: unknown;
   nodeId?: string;
   blindingRatio: number;
 }

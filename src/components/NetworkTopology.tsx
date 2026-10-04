@@ -8,11 +8,19 @@ import {
   Activity, Gauge, MapPin, Zap, Shield,
   ArrowRight, RefreshCw, Plus, Minus
 } from 'lucide-react';
+import type { NATSNode } from '@/types/pso.types';
 
 export function NetworkTopology() {
   const { nodes, messagesPerSecond, clusterHealth, migrateNode, addNode, removeNode } = useNATS();
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [animatedHealth, setAnimatedHealth] = useState(clusterHealth);
+  const [now, setNow] = useState(() => Date.now());
+
+  // Обновление текущего времени каждую секунду
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Анимация здоровья кластера
   useEffect(() => {
@@ -38,7 +46,7 @@ export function NetworkTopology() {
   };
 
   // Получение цвета для узла
-  const getNodeColor = (node: any) => {
+  const getNodeColor = (node: NATSNode) => {
     if (!node.active) return 'bg-red-500/20 border-red-500/50';
     if (node.latency < 5) return 'bg-green-500/20 border-green-500/50';
     if (node.latency < 15) return 'bg-yellow-500/20 border-yellow-500/50';
@@ -205,7 +213,7 @@ export function NetworkTopology() {
                   <div>
                     <div className="text-muted-foreground">Последняя активность</div>
                     <div className="font-mono">
-                      {Math.floor((Date.now() - node.lastSeen.getTime()) / 1000)}s назад
+                      {Math.floor((now - node.lastSeen.getTime()) / 1000)}s назад
                     </div>
                   </div>
                 </div>

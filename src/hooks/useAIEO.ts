@@ -1,6 +1,24 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { AIEOState, PredictionWindow } from '@/types/aieo.types';
 
+function createPrediction(): PredictionWindow {
+  const now = new Date();
+  const randomMinutes = Math.floor(Math.random() * 60) + 10;
+  const startTime = new Date(now.getTime() + randomMinutes * 60000);
+  const duration = Math.floor(Math.random() * 120) + 60; // 1-3 минуты
+  const confidence = Math.random() * 0.3 + 0.7; // 0.7 - 1.0
+
+  const actions: Array<'execute' | 'wait' | 'migrate'> = ['execute', 'wait', 'migrate'];
+  const recommendedAction = actions[Math.floor(Math.random() * actions.length)];
+
+  return {
+    startTime,
+    duration,
+    confidence: parseFloat(confidence.toFixed(2)),
+    recommendedAction
+  };
+}
+
 export function useAIEO() {
   const [state, setState] = useState<AIEOState>({
     slowLoop: {
@@ -56,26 +74,10 @@ export function useAIEO() {
     }
   });
 
-  const [prediction, setPrediction] = useState<PredictionWindow | null>(null);
+  const [prediction, setPrediction] = useState<PredictionWindow | null>(() => createPrediction());
 
   // Симуляция прогностического анализа
-  const generatePrediction = useCallback(() => {
-    const now = new Date();
-    const randomMinutes = Math.floor(Math.random() * 60) + 10;
-    const startTime = new Date(now.getTime() + randomMinutes * 60000);
-    const duration = Math.floor(Math.random() * 120) + 60; // 1-3 минуты
-    const confidence = Math.random() * 0.3 + 0.7; // 0.7 - 1.0
-
-    const actions: Array<'execute' | 'wait' | 'migrate'> = ['execute', 'wait', 'migrate'];
-    const recommendedAction = actions[Math.floor(Math.random() * actions.length)];
-
-    return {
-      startTime,
-      duration,
-      confidence: parseFloat(confidence.toFixed(2)),
-      recommendedAction
-    };
-  }, []);
+  const generatePrediction = useCallback(() => createPrediction(), []);
 
   // Обновление состояния каждые 5 секунд
   useEffect(() => {
@@ -113,9 +115,6 @@ export function useAIEO() {
         setPrediction(generatePrediction());
       }
     }, 5000);
-
-    // Инициализируем первое предсказание
-    setPrediction(generatePrediction());
 
     return () => clearInterval(interval);
   }, [generatePrediction]);

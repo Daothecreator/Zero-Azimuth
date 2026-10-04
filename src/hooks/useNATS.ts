@@ -59,7 +59,7 @@ export function useNATS() {
   const [clusterHealth, setClusterHealth] = useState(0.98);
 
   // Симуляция получения сообщения
-  const publishMessage = useCallback((subject: string, payload: any) => {
+  const publishMessage = useCallback((subject: string, payload: unknown) => {
     console.log(`[NATS] Publishing to ${subject}:`, payload);
     
     // Увеличиваем счетчик сообщений
@@ -74,7 +74,7 @@ export function useNATS() {
   }, []);
 
   // Подписка на тему
-  const subscribe = useCallback((subject: string, callback: (msg: any) => void) => {
+  const subscribe = useCallback((subject: string, callback: (msg: unknown) => void) => {
     console.log(`[NATS] Subscribing to ${subject}`);
     
     // Симуляция получения сообщений
